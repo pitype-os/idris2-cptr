@@ -1,10 +1,7 @@
 // Copyright 2024 Stefan Höck
 
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+#include <stdint-gcc.h>
+#include <stddef.h>
 
 void *cptr_malloc(size_t bytes) {
   if (bytes == 0) {
@@ -72,6 +69,3 @@ void *cptr_set_str(void **ptr, char *v) { ptr[0] = v; }
 
 void *cptr_set_null(void **ptr) { cptr_set_str(ptr, NULL); }
 
-struct timespec *cptr_allocTimespec() {
-  return cptr_calloc(1, sizeof(struct timespec));
-}

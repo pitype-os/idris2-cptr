@@ -1,30 +1,29 @@
 TARGET = cptr-idris
+LIBTARGET = $(TARGET).a
 TARGET_VERSION ?= 0.0.1
 
 INSTALLDIR = ../lib
 
+RANLIB ?= ranlib
+
+CC=riscv64-unknown-elf-gcc
 LDFLAGS =
-CPPFLAGS =
-
+CPPFLAGS = -fno-builtin -Wno-pointer-to-int-cast -Wall -Wextra -c -mcmodel=medany
 CC_VERSION = $(shell $(CC) --version)
-
-ifeq ($(findstring clang,$(CC_VERSION)),clang)
- DYLIB_WORKAROUND = cp "${INSTALLDIR}/${TARGET}" "${INSTALLDIR}/${TARGET}.dylib"
-else
- DYLIB_WORKAROUND = cp "${INSTALLDIR}/${TARGET}" "${INSTALLDIR}/${TARGET}.so"
- LDFLAGS += -fuse-ld=gold
-endif
 
 SRCS = $(wildcard *.c)
 OBJS = $(SRCS:.c=.o)
 
-all: $(TARGET)
+all: build
 
-$(TARGET): $(OBJS)
-	$(CC) -shared $(LDFLAGS) -o $@ $^
+.PHONY: build
+build: $(LIBTARGET)
+
+$(LIBTARGET): $(OBJS)
+	$(AR) rc $@ $^
+	$(RANLIB) $@
 
 .PHONY: clean
-
 clean :
 	rm -f $(OBJS) $(TARGET)
 	rm -rf $(INSTALLDIR)
@@ -33,5 +32,4 @@ clean :
 
 install:
 	mkdir -p $(INSTALLDIR)
-	install $(TARGET) $(wildcard *.h) $(INSTALLDIR)
-	$(DYLIB_WORKAROUND)
+	install $(LIBTARGET) $(wildcard *.h) $(INSTALLDIR)
