@@ -1,4 +1,4 @@
-TARGET = cptr-idris
+TARGET = libcptr-idris
 LIBTARGET = $(TARGET).a
 TARGET_VERSION ?= 0.0.1
 
