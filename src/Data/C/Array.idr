@@ -32,7 +32,7 @@ prim__copy_bp : Buffer -> AnyPtr -> Bits32 -> PrimIO ()
 
 export %foreign "C:cptr_inc_ptr, cptr-idris"
                 "scheme,chez:(lambda (p x y) (+ p (* x y)))"
-prim__inc_ptr : AnyPtr -> Bits64 -> Bits32 -> AnyPtr
+prim__inc_ptr : AnyPtr -> Bits32 -> Bits32 -> AnyPtr
 
 --------------------------------------------------------------------------------
 -- Immutable API
@@ -64,7 +64,7 @@ parameters {0 a      : Type}
   export %inline
   at : CIArray n a -> Fin n -> a
   at r x =
-    let MkIORes v _ := toPrim (deref $ prim__inc_ptr r.ptr (cast $ sizeof a) (cast $ finToNat x)) %MkWorld
+    let MkIORes v _ := toPrim (deref $ prim__inc_ptr r.ptr (sizeof a) (cast $ finToNat x)) %MkWorld
      in v
 
   export %inline
