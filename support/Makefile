@@ -8,7 +8,7 @@ RANLIB ?= ranlib
 
 CC=riscv64-unknown-elf-gcc
 LDFLAGS =
-CPPFLAGS = -fno-builtin -c -mcmodel=medany
+CPPFLAGS = -fno-builtin -Wno-int-conversion -Wno-implicit-function-declaration -Wno-pointer-to-int-cast -Wall -Wextra -c -mcmodel=medany
 CC_VERSION = $(shell $(CC) --version)
 
 SRCS = $(wildcard *.c)
