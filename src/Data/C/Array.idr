@@ -32,7 +32,7 @@ prim__copy_bp : Buffer -> AnyPtr -> Bits32 -> PrimIO ()
 
 export %foreign "C:cptr_inc_ptr, cptr-idris"
                 "scheme,chez:(lambda (p x y) (+ p (* x y)))"
-prim__inc_ptr : AnyPtr -> Bits32 -> Bits32 -> AnyPtr
+prim__inc_ptr : AnyPtr -> Bits64 -> Bits32 -> AnyPtr
 
 --------------------------------------------------------------------------------
 -- Immutable API
