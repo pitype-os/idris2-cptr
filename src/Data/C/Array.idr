@@ -64,7 +64,7 @@ parameters {0 a      : Type}
   export %inline
   at : CIArray n a -> Fin n -> a
   at r x =
-    let MkIORes v _ := toPrim (deref $ prim__inc_ptr r.ptr (sizeof a) (cast $ finToNat x)) %MkWorld
+    let MkIORes v _ := toPrim (deref $ prim__inc_ptr r.ptr (cast $ sizeof a) (cast $ finToNat x)) %MkWorld
      in v
 
   export %inline
